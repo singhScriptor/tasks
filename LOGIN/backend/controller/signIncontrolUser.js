@@ -8,6 +8,7 @@ const signIn = async(req,res,next)=>{
         if(!result){
             return res.status(404).json({message:"user not found"})
         }
+        //comparing user password from bcrypt password
         const passkey = await bcrypt.compare(password,result.password)
         if(!passkey){
             return res.status(401).json({message:'Invalid credentials'})
