@@ -11,13 +11,21 @@ app.use(express.json())
 
 const signUpuser = require('./routes/signUpuserRoutes')
 
+const signInuser = require('./routes/signInuserRoutes')
+
 app.use(express.static(path.join(__dirname,'../frontend')))
 
 app.get('/signup',(req,res)=>{
     res.sendFile(path.join(__dirname, '../frontend/signup.html'));
+
+})
+
+app.get('/signin',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../frontend/signIn.html'))
 })
 
 app.use('/user',signUpuser)
+app.use('/',signInuser)
 
 db.sync({alter:true})
 .then(()=>{
