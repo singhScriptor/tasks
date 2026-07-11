@@ -1,0 +1,122 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #121212;
+  color: #eaeaea;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#main-div {
+  width: 95%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column; /* table on top, form below */
+  gap: 20px;
+}
+
+/* Header */
+#main-header {
+  text-align: center;
+}
+#main-header h1 {
+  font-size: 2rem;
+  color: #00e0ff;
+  text-shadow: 0 0 8px #00e0ff;
+}
+
+/* Table section */
+#expenseTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0,224,255,0.3);
+}
+#expenseTable th, #expenseTable td {
+  padding: 10px;
+  text-align: center;
+}
+#expenseTable th {
+  background: #00e0ff;
+  color: #121212;
+}
+#expenseTable tr:nth-child(even) { background: #1f1f1f; }
+#expenseTable tr:nth-child(odd) { background: #2a2a2a; }
+
+/* Form section */
+form {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,224,255,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#category {
+  width: 50%;          /* half width */
+  align-self: flex-end; /* push to right corner */
+  padding: 8px;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #fff;
+  border: none;
+}
+label {
+  font-size: 0.85rem;
+}
+input, textarea, select {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #2a2a2a;
+  color: #fff;
+}
+#submit {
+  background: linear-gradient(135deg, #00e0ff, #0077ff);
+  color: #121212;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+#submit:hover {
+  background: linear-gradient(135deg, #0077ff, #00e0ff);
+  box-shadow: 0 0 10px #00e0ff;
+}
+
+
+
+@media (max-width: 600px) {
+  #main-header h1 {
+    font-size: 1.2rem;
+  }
+
+  #expenseTable {
+    font-size: 0.7rem;   /* smaller text */
+  }
+  #expenseTable th, #expenseTable td {
+    padding: 5px;        /* tighter spacing */
+  }
+
+  form {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  input, textarea, select {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  #submit {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}
+
