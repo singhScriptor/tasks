@@ -12,13 +12,13 @@ async function addExpense(e) {
             category: document.getElementById("category").value
         };
 
-        const token = localStorage.getItem("token"); // ✅ get JWT
+        const token = localStorage.getItem("token"); //  get JWT
 
-        let result = await fetch('http://localhost:3000/expense', {
+        let result = await fetch('http://localhost:3000/api/expense', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": token   // ✅ attach JWT
+                "Authorization": `Bearer ${token}`   //  attach JWT
             },
             body: JSON.stringify(expense)
         });
@@ -60,16 +60,17 @@ async function deleteExpense(id, btn) {
     try {
         const token = localStorage.getItem("token");
 
-        let result = await fetch(`http://localhost:3000/expense/${id}`, {
+        let result = await fetch(`http://localhost:3000/api/expense/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": token   // ✅ attach JWT
+                "Authorization": `Bearer ${token}`   //  attach JWT
             }
         });
 
         if (result.ok) {
             document.getElementById(`row-${id}`).remove();
+            await reload()
         } else {
             const data = await result.json();
             alert(data.message);
@@ -82,17 +83,24 @@ async function deleteExpense(id, btn) {
 async function reload() {
     try {
         const token = localStorage.getItem("token");
+        if(!token){
+            window.location.href = "/signin"
+            return
+        }
 
-        let result = await fetch("http://localhost:3000/expense", {
-            method: "GET",
+        let result = await fetch("http://localhost:3000/api/expense", {
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": token   // ✅ attach JWT
+                "Authorization": `Bearer ${token}` //  attach JWT
             }
         });
 
         if (result.ok) {
             let expenses = await result.json();
+
+              //Clear old rows before reloading
+            const tableBody = document.querySelector("#expenseTable tbody");
+            tableBody.innerHTML = "";
+
             expenses.forEach(exp => addRow(exp));
         } else {
             const data = await result.json();

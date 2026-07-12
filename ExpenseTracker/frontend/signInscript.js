@@ -33,8 +33,10 @@ async function postUser(details) {
 
             //  store JWT + userId
             localStorage.setItem('token', data.token);
-            localStorage.setItem('userId', data.userId);
+            //localStorage.setItem('userId', data.userId);
             alert('Login done!')
+
+            //redirect to expense tracker
             window.location.href="/expense"
         }
         else{
