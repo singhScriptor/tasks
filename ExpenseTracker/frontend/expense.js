@@ -1,10 +1,10 @@
-document.addEventListener("DOMContentLoaded", reload)
-const form = document.getElementById('form')
+document.addEventListener("DOMContentLoaded", reload);
+const form = document.getElementById('form');
 
-form.addEventListener('submit', addExpense)
+form.addEventListener('submit', addExpense);
 
 async function addExpense(e) {
-    e.preventDefault()
+    e.preventDefault();
     try {
         const expense = {
             price: document.getElementById("price").value,
@@ -12,23 +12,27 @@ async function addExpense(e) {
             category: document.getElementById("category").value
         };
 
+        const token = localStorage.getItem("token"); // ✅ get JWT
+
         let result = await fetch('http://localhost:3000/expense', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": token   // ✅ attach JWT
             },
             body: JSON.stringify(expense)
-        })
-        if (result.ok) {
-            let data = await result.json()
-            await addRow(data)
-        }
-        form.reset()
-    }
-    catch (err) {
-        console.log(err.message)
-    }
+        });
 
+        const data = await result.json();
+        if (result.ok) {
+            await addRow(data);
+            form.reset();
+        } else {
+            alert(data.message);
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
 }
 
 async function addRow(expense) {
@@ -54,15 +58,21 @@ async function addRow(expense) {
 
 async function deleteExpense(id, btn) {
     try {
+        const token = localStorage.getItem("token");
+
         let result = await fetch(`http://localhost:3000/expense/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": token   // ✅ attach JWT
             }
         });
 
         if (result.ok) {
-            document.getElementById(`row-${id}`).remove();  // remove row from table
+            document.getElementById(`row-${id}`).remove();
+        } else {
+            const data = await result.json();
+            alert(data.message);
         }
     } catch (err) {
         console.log(err.message);
@@ -71,16 +81,22 @@ async function deleteExpense(id, btn) {
 
 async function reload() {
     try {
+        const token = localStorage.getItem("token");
+
         let result = await fetch("http://localhost:3000/expense", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": token   // ✅ attach JWT
             }
         });
 
         if (result.ok) {
             let expenses = await result.json();
             expenses.forEach(exp => addRow(exp));
+        } else {
+            const data = await result.json();
+            alert(data.message);
         }
     } catch (err) {
         console.log(err.message);

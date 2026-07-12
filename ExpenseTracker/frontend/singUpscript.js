@@ -1,64 +1,68 @@
 const form = document.getElementById('form')
 
-form.addEventListener('submit',addUser)
+form.addEventListener('submit', addUser)
 
 async function addUser(event) {
     event.preventDefault()
-    try{
-        let details={
-            name:document.getElementById('name').value,
-            email:document.getElementById('email').value,
-            phone:document.getElementById('phone').value,
-            password:document.getElementById('password').value,
-            confirmPassword:document.getElementById('confirm').value
+    try {
+        let details = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            password: document.getElementById('password').value,
+            confirmPassword: document.getElementById('confirm').value
 
         }
-        if(details.password !== details.confirmPassword){
+        if (details.password !== details.confirmPassword) {
             alert("password do not match")
             return;
         }
-        if(details.name && details.email && details.phone && details.password){
+        if (details.name && details.email && details.phone && details.password) {
             await postUser(details)
         }
         form.reset()
     }
-    catch(err){
+    catch (err) {
         console.log(err.message)
     }
 
 }
 
 async function postUser(details) {
-    try{
-        const response = await fetch('http://localhost:3000/user',{
-            method:'POST',
-            headers:{
+    try {
+        const response = await fetch('http://localhost:3000/user', {
+            method: 'POST',
+            headers: {
                 "Content-Type": "application/json"
             },
-            body:JSON.stringify(details)
+            body: JSON.stringify(details)
         })
         const data = await response.json()
-        console.log(data)
-        let id = data.id
-        await getUser(id)
-        alert(`${data.name} signUp done successfully`)
+        if (response.ok) {
+            alert(`${data.name} signup done successfully! Please login.`);
+            //redirect to signin page
+            window.location.href = "/signin";
+        }
+        else {
+            alert('Signup failed: ' + data.message);
+        }
     }
-    catch(err){
+    catch (err) {
         console.log(err.message)
     }
 }
 async function getUser(id) {
-    try{
-        const res = await fetch(`http://localhost:3000/user/${id}`,{
-            method:'GET',
-            headers:{'Content-Type':'application/json'},
+    try {
+        const res = await fetch(`http://localhost:3000/user/${id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
         })
         const data = await res.json()
         console.log(data)
         alert(`Fetched user: ${data.name}`);
 
     }
-    catch(err){
+    catch (err) {
         console.log(err.message)
     }
 }

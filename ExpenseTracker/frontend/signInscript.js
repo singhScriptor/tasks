@@ -26,12 +26,18 @@ async function postUser(details) {
             headers:{"Content-Type": "application/json"},
             body:JSON.stringify(details)
         })
+
+        const data = await result.json();
+
         if(result.ok){
+
+            //  store JWT + userId
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', data.userId);
             alert('Login done!')
-            window.location.href=""
+            window.location.href="/expense"
         }
         else{
-            let error = await result.json()
             alert('login failed',error.message)
         }
     }

@@ -66,6 +66,51 @@ body{
     cursor: pointer;
 }
 
+#expenseTable {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#expenseTable th, #expenseTable td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+#expenseTable th {
+    background-color: blueviolet;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+#expenseTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#expenseTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Delete button styling */
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: crimson;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+
 @media (max-width : 600px){
     #h1{
         font-size:1.2rem;
@@ -80,5 +125,18 @@ body{
         width: 100%;
         padding:15px;
         cursor: pointer;
+    }
+        #expenseTable {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    #expenseTable th, #expenseTable td {
+        padding: 8px;
+    }
+
+    button {
+        padding: 6px 10px;
+        font-size: 12px;
     }
 }
