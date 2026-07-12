@@ -13,7 +13,7 @@ const signUpuser = require('./routes/signUpuserRoutes')
 
 const signInuser = require('./routes/signInuserRoutes')
 
-const expense = require('./routes/expenseRoutes')
+const expenseTrack = require('./routes/expenseRoutes')
 
 app.use(express.static(path.join(__dirname,'../frontend')))
 
@@ -31,15 +31,18 @@ app.get('/expense',(req,res)=>{
 })
 
 app.get('/', (req, res) => {
-    res.redirect('/signin');   // ✅ always show signin first
+    res.redirect('/signin');   //  always show signin first
 });
 
 
 app.use('/user',signUpuser)
 app.use('/',signInuser)
-app.use('/expense',expense)
+app.use('/api/expense',expenseTrack)
 
-db.sync({alter:true})
+
+
+
+db.sync()
 .then(()=>{
     app.listen(3000,()=>{
         console.log('server is listening...!')

@@ -10,7 +10,7 @@ const addExpense = async(req,res,next)=>{
             category,
             userId : req.user.id
         })
-        res.status(201).json(result)
+        res.status(201).json(result.toJSON())
     }
     catch(err){
         err.statusCode=500
@@ -22,8 +22,10 @@ const getExpense = async(req,res,next)=>{
     try{
         const expenses = await expense.findAll({
             where:{userId:req.user.id}
+
         })
-        res.json(expenses)
+        console.log("Expenses found:", expenses.map(e => e.toJSON()));
+        res.json(expenses.map(e=>e.toJSON()))
     }
     catch(err){
         err.statusCode = 500

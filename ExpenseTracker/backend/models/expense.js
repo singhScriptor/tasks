@@ -19,6 +19,10 @@ const expense = sequelize.define('expense',{
     category:{
         type:DataTypes.STRING,
         allowNull:false
+    },
+    userId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
     }
 },
     {
@@ -27,4 +31,4 @@ const expense = sequelize.define('expense',{
     }
 )
 
-module.exports =  expense 
+module.exports =  expense
