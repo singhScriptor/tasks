@@ -13,6 +13,8 @@ const signUpuser = require('./routes/signUpuserRoutes')
 
 const signInuser = require('./routes/signInuserRoutes')
 
+const expense = require('./routes/expenseRoutes')
+
 app.use(express.static(path.join(__dirname,'../frontend')))
 
 app.get('/signup',(req,res)=>{
@@ -24,8 +26,18 @@ app.get('/signin',(req,res)=>{
     res.sendFile(path.join(__dirname,'../frontend/signIn.html'))
 })
 
+app.get('/expense',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../frontend/expense.html'))
+})
+
+app.get('/', (req, res) => {
+    res.redirect('/signin');   // ✅ always show signin first
+});
+
+
 app.use('/user',signUpuser)
 app.use('/',signInuser)
+app.use('/expense',expense)
 
 db.sync({alter:true})
 .then(()=>{
