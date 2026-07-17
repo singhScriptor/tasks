@@ -110,6 +110,37 @@ button:hover {
     background-color: darkred;
 }
 
+/* --premium button styling */
+#premium {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+#premiumBtn {
+    background-color: #00bcd4; /* Neon blue cyan to match table header accent */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 188, 212, 0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+#premiumBtn:hover {
+    background-color: #00acc1;
+    transform: translateY(-1px);
+    box-shadow: 0px 6px 15px rgba(0, 188, 212, 0.5);
+}
+
+#premiumBtn:active {
+    transform: translateY(1px);
+}
+
 
 @media (max-width : 600px){
     #h1{

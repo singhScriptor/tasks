@@ -120,3 +120,4 @@ async function reload() {
         console.error("Error reloading expenses:", err.message);
     }
 }
+

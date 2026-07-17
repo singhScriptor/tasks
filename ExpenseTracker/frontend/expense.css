@@ -12,7 +12,8 @@ body {
   width: 95%;
   max-width: 900px;
   display: flex;
-  flex-direction: column; /* table on top, form below */
+  flex-direction: column;
+  /* table on top, form below */
   gap: 20px;
 }
 
@@ -20,6 +21,7 @@ body {
 #main-header {
   text-align: center;
 }
+
 #main-header h1 {
   font-size: 2rem;
   color: #00e0ff;
@@ -32,43 +34,58 @@ body {
   border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 12px rgba(0,224,255,0.3);
+  box-shadow: 0 0 12px rgba(0, 224, 255, 0.3);
 }
-#expenseTable th, #expenseTable td {
+
+#expenseTable th,
+#expenseTable td {
   padding: 10px;
   text-align: center;
 }
+
 #expenseTable th {
   background: #00e0ff;
   color: #121212;
 }
-#expenseTable tr:nth-child(even) { background: #1f1f1f; }
-#expenseTable tr:nth-child(odd) { background: #2a2a2a; }
+
+#expenseTable tr:nth-child(even) {
+  background: #1f1f1f;
+}
+
+#expenseTable tr:nth-child(odd) {
+  background: #2a2a2a;
+}
 
 /* Form section */
 form {
   background: #1a1a1a;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,224,255,0.2);
+  box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 #category {
-  width: 50%;          /* half width */
-  align-self: flex-end; /* push to right corner */
+  width: 50%;
+  /* half width */
+  align-self: flex-end;
+  /* push to right corner */
   padding: 8px;
   border-radius: 6px;
   background: #2a2a2a;
   color: #fff;
   border: none;
 }
+
 label {
   font-size: 0.85rem;
 }
-input, textarea, select {
+
+input,
+textarea,
+select {
   padding: 8px;
   border: none;
   border-radius: 6px;
@@ -76,6 +93,7 @@ input, textarea, select {
   background: #2a2a2a;
   color: #fff;
 }
+
 #submit {
   background: linear-gradient(135deg, #00e0ff, #0077ff);
   color: #121212;
@@ -85,9 +103,42 @@ input, textarea, select {
   font-size: 0.9rem;
   cursor: pointer;
 }
+
 #submit:hover {
   background: linear-gradient(135deg, #0077ff, #00e0ff);
   box-shadow: 0 0 10px #00e0ff;
+}
+
+/* premium button style */
+
+#premium {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+#premiumBtn {
+  background: linear-gradient(135deg, #00e0ff, #0077ff);
+  color: #121212;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+  transition: all 0.2s ease-in-out;
+}
+
+#premiumBtn:hover {
+  background: linear-gradient(135deg, #0077ff, #00e0ff);
+  box-shadow: 0 0 15px #00e0ff;
+  transform: translateY(-1px);
+}
+
+#premiumBtn:active {
+  transform: translateY(1px);
 }
 
 
@@ -98,10 +149,14 @@ input, textarea, select {
   }
 
   #expenseTable {
-    font-size: 0.7rem;   /* smaller text */
+    font-size: 0.7rem;
+    /* smaller text */
   }
-  #expenseTable th, #expenseTable td {
-    padding: 5px;        /* tighter spacing */
+
+  #expenseTable th,
+  #expenseTable td {
+    padding: 5px;
+    /* tighter spacing */
   }
 
   form {
@@ -109,7 +164,9 @@ input, textarea, select {
     gap: 6px;
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 0.8rem;
     padding: 6px;
   }
@@ -118,5 +175,20 @@ input, textarea, select {
     font-size: 0.8rem;
     padding: 8px;
   }
-}
 
+  #premium {
+    position: static;
+    /* Removes absolute positioning */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  #premiumBtn {
+    width: 90%;
+    /* Makes button span nicely across mobile widths */
+    padding: 12px;
+    font-size: 13px;
+  }
+}

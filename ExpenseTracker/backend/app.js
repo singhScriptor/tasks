@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, '../frontend')))
 const signUpuser = require('./routes/signupRoutes')
 const signInuser = require('./routes/signinRoutes')
 const expenseTrack = require('./routes/expenseRoutes')
+const paymentRoutes = require('./routes/paymentRoutes')
 
 // HTML Page Serving
 app.get('/signup', (req, res) => {
@@ -38,10 +39,16 @@ app.get('/', (req, res) => {
     res.redirect('/signin'); // Always signin first
 });
 
+// redirect to details page after payment
+app.get('/payment-status', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/status.html'));
+});
+
 // API Routes
 app.use('/user', signUpuser)
 app.use('/', signInuser)
 app.use('/api/expense', expenseTrack)
+app.use('/api/payment',paymentRoutes)
 
 // Global Error Handler
 app.use((err, req, res, next) => {
@@ -52,7 +59,7 @@ app.use((err, req, res, next) => {
 });
 
 // Database sync and Start server
-db.sync()
+db.sync({alter:true})
     .then(() => {
         app.listen(port, () => {
             console.log(`Server is running and listening on port ${port}...!`)
