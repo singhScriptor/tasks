@@ -1,62 +1,55 @@
-const expense = require('../models/expense')
+const expenseService = require('../services/expenseServices');
 
-const addExpense = async(req,res,next)=>{
-    try{
-        const {price,description,category} = req.body
+const addExpense = async (req, res, next) => {
+    try {
+        const { price, description, category } = req.body;
+        const userId = req.user.id;
 
-        const result = await expense.create({
-            price,
-            description,
-            category,
-            userId : req.user.id
-        })
-        res.status(201).json(result.toJSON())
+        // Delegate DB operation to the service layer
+        const result = await expenseService.createExpense({ price, description, category }, userId);
+
+        res.status(201).json(result);
+    } catch (err) {
+        err.statusCode = 500;
+        next(err);
     }
-    catch(err){
-        err.statusCode=500
-        next(err)
+};
+
+const getExpense = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+
+        // Fetch expenses through service
+        const expenses = await expenseService.getAllExpensesByUserId(userId);
+
+        res.json(expenses);
+    } catch (err) {
+        err.statusCode = 500;
+        next(err);
     }
-}
+};
 
-const getExpense = async(req,res,next)=>{
-    try{
-        const expenses = await expense.findAll({
-            where:{userId:req.user.id}
+const deleteExpense = async (req, res, next) => {
+    try {
+        const expenseId = req.params.id;
+        const userId = req.user.id;
 
-        })
-        console.log("Expenses found:", expenses.map(e => e.toJSON()));
-        res.json(expenses.map(e=>e.toJSON()))
-    }
-    catch(err){
-        err.statusCode = 500
-        next(err)
-    }
-}
+        // Perform delete via service
+        const deleted = await expenseService.deleteExpenseByIdAndUserId(expenseId, userId);
 
-const deleteExpense = async(req,res,next)=>{
-    try{
-        const Id = req.params.id
-
-        const deleted = await expense.findOne({
-            where:{
-                id : Id,
-                userId : req.user.id
-            }
-        })
-        if(!deleted){
-            return res.status(404).json({message:'Not found'})
+        if (!deleted) {
+            return res.status(404).json({ message: 'Expense not found or unauthorized' });
         }
-        await deleted.destroy()
-        res.json({message:'Expense deleted'})
+
+        res.json({ message: 'Expense deleted successfully' });
+    } catch (err) {
+        err.statusCode = 500;
+        next(err);
     }
-    catch(err){
-        err.statusCode = 500
-        next(err)
-    }
-}
+};
 
 module.exports = {
     addExpense,
     getExpense,
     deleteExpense
-}
+};
